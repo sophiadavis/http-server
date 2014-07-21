@@ -1,8 +1,17 @@
 import socket
+import sys
 
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create server socket
     s.bind(('localhost', 8000)) # bind to port 8000, on this machine
+    try:
+        s.bind((host, port)) # bind to host 'localhost', port 8000, on this machine
+        print "Socket bind complete -- host " + host + ", port: " + str(port)
+    except socket.error, msg:
+        print "Could not bind socket."
+        print "Error message: " + msg[1]
+        sys.exit(1)
+        
     s.listen(5) # up to 5 connect requests (waiting to connect)
     
     while 1:
