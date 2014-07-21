@@ -7,6 +7,7 @@ def main():
     host = 'localhost'
     port = 8000
     try:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, port)) # bind to host 'localhost', port 8000, on this machine
         print "Socket bind complete -- host " + host + ", port: " + str(port)
     except socket.error, msg:
