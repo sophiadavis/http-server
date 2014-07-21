@@ -22,16 +22,18 @@ def main():
         client, address = s.accept() # client = new socket object to communicate with connection
         print "Connected to " + address[0] + ":" + str(address[1])
         
-        data = client.recv(1024) # arg is max num bytes to receive
+        request = client.recv(10000) # arg is max num bytes to receive
         
-        reply = 'OK...' + data
+        reply = '''HTTP/1.1 200 OK
+
+text'''
         
-        if not data:
+        if not request:
             break
-        print "Got data: " + data
-        client.sendall(reply) # send data back to client (sendall sends all available data, unlike send)
-        
-    client.close()
+        print "Got data: " + request
+        client.sendall(reply) # send reply back to client (sendall sends all available data, unlike send)
+        client.close() # http is connection-less, each exchange of information is a whole new session
+        print "client socked closed"
     s.close()
 
 if __name__ == "__main__":
