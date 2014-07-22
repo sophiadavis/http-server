@@ -24,9 +24,7 @@ def main():
         
         request = client.recv(10000) # arg is max num bytes to receive
         
-        reply = '''HTTP/1.1 200 OK
-
-text'''
+        reply = '''HTTP/1.1 200 OK\n\ntext'''
         
         if not request:
             break
