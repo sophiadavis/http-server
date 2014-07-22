@@ -20,15 +20,38 @@ def main():
     
     while 1:
         client, address = s.accept() # client = new socket object to communicate with connection
-        print "Connected to " + address[0] + ":" + str(address[1])
+        print "\nConnected to " + address[0] + ":" + str(address[1])
         
         request = client.recv(10000) # arg is max num bytes to receive
         
-        reply = '''HTTP/1.1 200 OK\n\ntext'''
+        print "Here is the http request: "
+        print request
+        parsed = request.split(' ', 2)
+        
+        method = parsed[0]
+        path = parsed[1] 
+        
+        reply = '''HTTP/1.1 200 OK\nContent-Type: text/html;\n\n<html><head><link rel="stylesheet" type="text/css" href="style.css"></head>'''
         
         if not request:
             break
-        print "Got data: " + request
+            
+        # assume that method was "GET"
+        elif path == '/':
+            print "request for root"
+#             reply += "Content-Disposition: inline; filename=index.html"
+            reply += '''<body>
+                            <h1>Hello, world!</h1>
+                        </body>
+                    </html>'''
+        elif path == '/picture':
+            reply += '''<body>
+                            <img src="PushkinNaBereguChernogoMoria.jpeg">
+                        </body>
+                    </html>'''
+        else: 
+            reply += '''<body>boring content :(</body>'''
+        print reply
         client.sendall(reply) # send reply back to client (sendall sends all available data, unlike send)
         client.close() # http is connection-less, each exchange of information is a whole new session
         print "client socked closed"
