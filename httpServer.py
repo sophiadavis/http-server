@@ -31,28 +31,32 @@ def main():
         method = parsed[0]
         path = parsed[1] 
         
-        reply = '''HTTP/1.1 200 OK\nContent-Type: text/html;\n\n<html><head><link rel="stylesheet" type="text/css" href="style.css"></head>'''
+        response = '''HTTP/1.1 200 OK\r\n'''
         
         if not request:
             break
             
-        # assume that method was "GET"
-        elif path == '/':
-            print "request for root"
-#             reply += "Content-Disposition: inline; filename=index.html"
-            reply += '''<body>
-                            <h1>Hello, world!</h1>
-                        </body>
-                    </html>'''
-        elif path == '/picture':
-            reply += '''<body>
-                            <img src="PushkinNaBereguChernogoMoria.jpeg">
-                        </body>
-                    </html>'''
+        elif path == "/":
+            content_type_header = "Content-Type: text/html;\r\n\r\n"
+            file = "index.html"
+            
+        elif path == "/style.css":
+            content_type_header = "Content-Type: text/css;\r\n\r\n"
+            file = "style.css"
+        
+        elif path == "/picture":
+            content_type_header = "Content-Type: image/jpeg;\r\n\r\n"
+            file = "PushkinNaBereguChernogoMoria.jpeg"
         else: 
-            reply += '''<body>boring content :(</body>'''
-        print reply
-        client.sendall(reply) # send reply back to client (sendall sends all available data, unlike send)
+            content_type_header = "Content-Type: text/html;\r\n\r\n"
+            file = "boring.html"
+            
+        response += content_type_header
+        data = open(file, "r")
+        response += data.read()
+        
+        print response
+        client.sendall(response) # send reply back to client (sendall sends all available data, unlike send)
         client.close() # http is connection-less, each exchange of information is a whole new session
         print "client socked closed"
     s.close()
