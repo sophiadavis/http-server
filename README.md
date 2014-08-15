@@ -1,4 +1,7 @@
 Sophia Davis
+Summer 2014
+
+------------
 
 A simple, heavily-commented HTTP server serving two static pages and a css file. 
 
