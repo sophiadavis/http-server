@@ -40,19 +40,19 @@ def main():
             
         elif path == "/":
             content_type_header = "Content-Type: text/html;\r\n\r\n"
-            file = "index.html"
+            file = "pages/index.html"
             
         elif path == "/style.css":
             content_type_header = "Content-Type: text/css;\r\n\r\n"
-            file = "style.css"
+            file = "pages/style.css"
         
         elif path == "/picture":
             content_type_header = "Content-Type: image/jpeg;\r\n\r\n"
-            file = "PushkinNaBereguChernogoMoria.jpeg"
+            file = "pages/PushkinNaBereguChernogoMoria.jpeg"
         
         else: # I guess this would technically be a 404...
             content_type_header = "Content-Type: text/html;\r\n\r\n"
-            file = "boring.html"
+            file = "pages/boring.html"
             
         response += content_type_header
         data = open(file, "r")
