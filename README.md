@@ -9,5 +9,5 @@ To run:
 ``` 
 python httpServer.py
 ```
-
+and navigate to localhost:8000. The server responds to HTTP GET requests for root ('/') and '/picture'. All other requests are redirected to a third page. 
 
